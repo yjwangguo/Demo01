@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangjian.dao.EmailContentDao">
+    <insert id="addEmailContent" parameterType="EmailContent">
+        insert into T_EMAILCONTENT (E_ID, EC_CONTENT, EC_DATE) values (#{email.e_id},#{ec_content},#{ec_date})
+    </insert>
+    <update id="updateEmailContent" parameterType="EmailContent">
+        update T_EMAILCONTENT
+        <set>
+            <if test="email!=null">
+                e_id = #{email.e_id},
+            </if>
+            <if test="ec_date!=null">
+                ec_date =#{ec_date},
+            </if>
+            <if test="ec_content!=null">
+                ec_content=#{ec_content},
+            </if>
+        </set> where ec_id = #{ec_id}
+    </update>
+    <delete id="delEmailContent" parameterType="int">
+        delete from T_EMAILCONTENT where EC_ID = #{ec_id}
+    </delete>
+    <select id="queryEmailContentByEid" resultType="com.yangjian.model.EmailContent" parameterType="int">
+        select * from T_EMAILCONTENT where E_ID = #{e_id}
+    </select>
+</mapper>

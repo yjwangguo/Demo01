@@ -1,0 +1,43 @@
+<?com.yangjian.xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangjian.dao.UserDao">
+    <insert id="addUser" parameterType="User">
+        insert into T_USER (U_ACCOUNT,U_PASS) values (#{u_account}，#{u_pass})
+    </insert>
+    <update id="updateUser" parameterType="User">
+        update T_USER <set>
+        <if test="u_schoolTag!=null">
+          u_schoolTag = #{u_schoolTag},
+        </if>
+        <if test="u_age!=null">
+            u_age=#{u_age},
+        </if>
+        <if test="u_address!=null">
+            u_address=#{u_address},
+        </if>
+        <if test="u_account!=null">
+            u_account=#{u_account},
+        </if>
+        <if test="u_pass!=null">
+            u_pass=#{u_pass},
+        </if>
+        <if test="u_name!=null">
+            u_name=#{u_name},
+        </if>
+        <if test="email!=null">
+            e_id = #{email.e_id},
+        </if>
+        <if test="u_timeOfRaduation!=null">
+            u_timeOfRaduation = #{u_timeOfRaduation},
+        </if>
+    </set> where u_id=#{u_id}
+    </update>
+    <select id="queryUserByAccount" resultType="com.yangjian.model.User">
+        select * from T_USER where U_ACCOUNT=#{account};
+    </select>
+    <select id="queryUserByEid" resultType="com.yangjian.model.User" parameterType="int">
+        select * from T_USER where E_ID = #{e_id}
+    </select>
+</mapper>

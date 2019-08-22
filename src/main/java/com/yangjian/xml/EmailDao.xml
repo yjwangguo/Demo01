@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangjian.dao.EmailDao">
+    <insert id="addEmail" parameterType="Email">
+        insert into T_EMAIL values (#{e_name})
+    </insert>
+    <delete id="delEmail" parameterType="int">
+        delete from T_EMAIL where E_ID = #{e_id}
+    </delete>
+    <select id="queryById" resultType="com.yangjian.model.Email" parameterType="int" resultMap="EmailAndUserAndEC">
+        select E_ID,E_NAME from T_EMAIL where E_ID=#{e_id}
+    </select>
+    <select id="queryByName" resultType="com.yangjian.model.Email">
+        select * from T_EMAIL where E_NAME=#{e_name}
+    </select>
+    <resultMap id="EmailAndUserAndEC" type="Email">
+        <id property="e_id" column="E_ID"/>
+        <result property="e_name" column="E_NAME"/>
+        <association property="user" javaType="User" column="E_ID"
+                     select="com.yangjian.dao.UserDao.queryUserByEid"/>
+        <collection property="emailContents" ofType="list" column="E_ID"
+                    select="com.yangjian.dao.EmailContentDao.queryEmailContentByEid"/>
+    </resultMap>
+</mapper>
